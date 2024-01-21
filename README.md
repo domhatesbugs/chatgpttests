@@ -1,2 +1,3 @@
 # chatgpttests
-testing chat gpt code (launched on netlify, these are only for my personal enjoyment but feel free to test them)
+These are all coded by chatgpt 4 (occasionally Grimoire [gpt4 coding bot])
+mostly for my personal enjoyment but feel free to play around with them and comment if you found errors or have a good idea.
