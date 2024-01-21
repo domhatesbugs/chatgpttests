@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Image Transform Tool</title>
+    <style>
+        #imageContainer {
+            margin-top: 20px;
+            border: 1px solid #ddd;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        #imageContainer img {
+            max-width: 100%;
+            transition: transform 0.3s ease-in-out;
+        }
+    </style>
+</head>
+<body>
+    <h2>Image Transform Tool</h2>
+    <input type="file" id="imageUpload" accept="image/*"><br><br>
+    <label for="scaleSlider">Scale:</label>
+    <input type="range" id="scaleSlider" min="0.1" max="2" step="0.1" value="1"><br>
+    <label for="rotateSlider">Rotate (Degrees):</label>
+    <input type="range" id="rotateSlider" min="0" max="360" step="1" value="0"><br>
+    <div id="imageContainer"></div>
+
+    <script>
+        document.getElementById('imageUpload').addEventListener('change', function(event) {
+            const file = event.target.files[0];
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const img = new Image();
+                img.src = e.target.result;
+                img.id = 'uploadedImage';
+                document.getElementById('imageContainer').innerHTML = '';
+                document.getElementById('imageContainer').appendChild(img);
+            };
+            reader.readAsDataURL(file);
+        });
+
+        document.getElementById('scaleSlider').addEventListener('input', function(event) {
+            const scaleValue = event.target.value;
+            const img = document.getElementById('uploadedImage');
+            if (img) {
+                img.style.transform = `scale(${scaleValue}) rotate(${img.dataset.rotation || 0}deg)`;
+            }
+        });
+
+        document.getElementById('rotateSlider').addEventListener('input', function(event) {
+            const rotateValue = event.target.value;
+            const img = document.getElementById('uploadedImage');
+            if (img) {
+                img.dataset.rotation = rotateValue;
+                img.style.transform = `rotate(${rotateValue}deg) scale(${img.style.transform.replace(/[^\d.]/g, '')})`;
+            }
+        });
+    </script>
+</body>
+</html>
